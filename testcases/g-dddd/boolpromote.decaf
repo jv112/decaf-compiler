@@ -1,0 +1,20 @@
+extern func print_int(int) void;
+extern func print_string(string) void;
+
+package booltest {
+  func foo(a int, b int, c bool) void {
+    print_int(a);
+    print_int(b);
+    print_int(c);
+    return;
+  }
+  func main() int {
+    var a, b, c bool;
+    a = true;
+    b = false;
+    c = a && b;
+    foo(a, b, c);
+
+    return (0);
+  }
+}

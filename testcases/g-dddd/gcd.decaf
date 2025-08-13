@@ -1,0 +1,84 @@
+extern func print_int(int) void;
+extern func print_string(string) void;
+extern func read_int() int;
+
+
+// https://www.geeksforgeeks.org/dsa/steins-algorithm-for-finding-gcd/
+
+package GCD {
+
+    func bitwise_or(a int, b int) int {
+      var result int;
+      var i int;
+      var bitA int;
+      var bitB int;
+
+      while (i < 32) {
+          bitA = (a / (1 << i)) % 2;
+          bitB = (b / (1 << i)) % 2;
+
+          if (bitA == 1 || bitB == 1) {
+              result = result + (1 << i);
+          }
+          i = i + 1;
+      }
+
+      return (result);
+    }
+
+    func isOdd(a int) bool {
+      return (a % 2 == 1);
+    }
+
+    func gcd(a int, b int) int {
+      var k int;
+      var first_it bool;
+
+      if (a == 0) {
+        return (b);
+      }
+      if (b == 0) {
+        return (a);
+      }
+
+      for (k = 0; !isOdd(bitwise_or(a, b)); k = k + 1) {
+        a = a >> 1;
+        b = b >> 1;
+      }
+
+      while (!isOdd(a)) {
+        a = a >> 1;
+      }
+
+      first_it = true;
+
+      while (first_it || b != 0) {
+        while (!isOdd(b)) {
+          b = b >> 1;
+        }
+
+        if (a > b) {
+          var temp int;
+          temp = a;
+          a = b;
+          b = temp;
+        }
+
+        b = (b - a);
+        first_it = false;
+      }
+
+      return (a << k);
+    }
+
+    func main() int {
+        var a, b int;
+
+        a = 34;
+        b = 17;
+
+        print_int(gcd(a, b));
+
+        return (0);
+    }
+}

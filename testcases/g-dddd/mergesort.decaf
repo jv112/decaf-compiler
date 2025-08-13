@@ -1,0 +1,155 @@
+extern func print_string(string) void;
+extern func print_int(int) void;
+extern func read_int() int;
+
+
+// https://www.geeksforgeeks.org/dsa/merge-sort/
+
+package MergeSort {
+  var array [25]int;
+  var L [25]int;
+  var R [25]int;
+
+  var expected[25]int;
+
+  func merge(l int, m int, r int) void {
+    var i, j, k int;
+    var n1, n2 int;
+
+    n1 = m - l + 1;
+    n2 = r - m;
+
+    for (i = 0; i < n1; i = i + 1) {
+      L[i] = array[l + i];
+    }
+    for (j = 0; j < n2; j = j + 1) {
+      R[j] = array[m + 1 + j];
+    }
+
+    i = 0;
+    j = 0;
+    k = l;
+
+    while (i < n1 && j < n2) {
+      if (L[i] <= R[j]) {
+        array[k] = L[i];
+        i = i + 1;
+      }
+      else {
+        array[k] = R[j];
+        j = j + 1;
+      }
+      k = k + 1;
+    }
+
+    while (i < n1) {
+      array[k] = L[i];
+      i = i + 1;
+      k = k + 1;
+    }
+
+     while (j < n2) {
+      array[k] = R[j];
+      j = j + 1;
+      k = k + 1;
+    }
+
+  }
+
+  func mergeSort(l int, r int) void {
+    if (l < r) {
+      var m int;
+      m = l + (r - l ) / 2;
+      mergeSort(l, m);
+      mergeSort(m + 1, r);
+      merge(l, m, r);
+    }
+  }
+
+  func print() void {
+    var i, j int;
+    for (i = 0; i < 25; i = i + 1) {
+      print_int(array[i]);
+      print_string(" ");
+    }
+
+    print_string("\n");
+  }
+
+  func verify() bool {
+    var i int;
+    for (i = 0; i < 25; i = i + 1) {
+      if (array[i] != expected[i]) {
+        return (false);
+      }
+    }
+    return (true);
+  }
+
+  func main() int {
+    var correct bool;
+
+    array[0] = 144;
+    array[1] = 95;
+    array[2] = 34;
+    array[3] = 241;
+    array[4] = 108;
+    array[5] = 81;
+    array[6] = 243;
+    array[7] = 76;
+    array[8] = 214;
+    array[9] = 72;
+    array[10] = 158;
+    array[11] = 107;
+    array[12] = 165;
+    array[13] = 181;
+    array[14] = 152;
+    array[15] = 125;
+    array[16] = 132;
+    array[17] = 77;
+    array[18] = 215;
+    array[19] = 105;
+    array[20] = 167;
+    array[21] = 101;
+    array[22] = 152;
+    array[23] = 14;
+    array[24] = 70;
+
+    expected[0] = 14;
+    expected[1] = 34;
+    expected[2] = 70;
+    expected[3] = 72;
+    expected[4] = 76;
+    expected[5] = 77;
+    expected[6] = 81;
+    expected[7] = 95;
+    expected[8] = 101;
+    expected[9] = 105;
+    expected[10] = 107;
+    expected[11] = 108;
+    expected[12] = 125;
+    expected[13] = 132;
+    expected[14] = 144;
+    expected[15] = 152;
+    expected[16] = 152;
+    expected[17] = 158;
+    expected[18] = 165;
+    expected[19] = 167;
+    expected[20] = 181;
+    expected[21] = 214;
+    expected[22] = 215;
+    expected[23] = 241;
+    expected[24] = 243;
+
+    print();
+    mergeSort(0, 24);
+    print();
+
+    correct = verify();
+
+    print_string("Matches expected result: ");
+    print_int(correct);
+
+    return (0);
+  }
+}

@@ -1,0 +1,19 @@
+; ModuleID = 'safe'
+source_filename = "DecafComp"
+
+@globalstring = private unnamed_addr constant [14 x i8] c"Hello, world!\00", align 1
+@globalstring.1 = private unnamed_addr constant [14 x i8] c"Hello, world!\00", align 1
+
+declare void @print_string(ptr)
+
+declare void @print_int(i32)
+
+define i32 @main() {
+func:
+  call void @print_string(ptr @globalstring)
+  ret i32 0
+
+unreachable:                                      ; No predecessors!
+  call void @print_string(ptr @globalstring.1)
+  ret i32 0
+}

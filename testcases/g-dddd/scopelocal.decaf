@@ -1,0 +1,21 @@
+extern func foo() int;
+extern func print_int(int) void;
+
+package Scope {
+    func foo(x int) void { 
+      var y int;
+      y = -3;
+      {
+        var y int;
+        y = 5;
+        print_int(y);
+      }
+      print_int(y);
+    }
+    
+    func main() int { 
+      foo(1); 
+
+      return (0);
+    }
+}

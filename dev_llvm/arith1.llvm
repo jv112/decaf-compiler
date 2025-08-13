@@ -1,0 +1,57 @@
+; ModuleID = 'foo'
+source_filename = "DecafComp"
+
+declare void @print_int(i32)
+
+define i32 @main() {
+func:
+  %flag = alloca i1, align 1
+  store i1 false, ptr %flag, align 1
+  %a = alloca i1, align 1
+  store i1 false, ptr %a, align 1
+  %b = alloca i1, align 1
+  store i1 false, ptr %b, align 1
+  %c = alloca i1, align 1
+  store i1 false, ptr %c, align 1
+  %size = alloca i32, align 4
+  store i32 0, ptr %size, align 4
+  store i1 true, ptr %a, align 1
+  store i1 false, ptr %b, align 1
+  store i1 true, ptr %c, align 1
+  %a1 = load i1, ptr %a, align 1
+  br i1 %a1, label %skctend, label %noskct
+
+noskct:                                           ; preds = %func
+  %b2 = load i1, ptr %b, align 1
+  br i1 %b2, label %noskct3, label %skctend4
+
+skctend:                                          ; preds = %skctend4, %func
+  %phival6 = phi i1 [ %a1, %func ], [ %ortmp, %skctend4 ]
+  store i1 %phival6, ptr %flag, align 1
+  store i32 0, ptr %size, align 4
+  br label %if
+
+noskct3:                                          ; preds = %noskct
+  %c5 = load i1, ptr %c, align 1
+  %nottmp = xor i1 %c5, true
+  %andtmp = and i1 %b2, %nottmp
+  br label %skctend4
+
+skctend4:                                         ; preds = %noskct3, %noskct
+  %phival = phi i1 [ %b2, %noskct ], [ %andtmp, %noskct3 ]
+  %ortmp = or i1 %a1, %phival
+  br label %skctend
+
+if:                                               ; preds = %skctend
+  %size7 = load i32, ptr %size, align 4
+  %geqtmp = icmp sge i32 %size7, 0
+  br i1 %geqtmp, label %true, label %false
+
+true:                                             ; preds = %if
+  %size8 = load i32, ptr %size, align 4
+  call void @print_int(i32 %size8)
+  br label %false
+
+false:                                            ; preds = %true, %if
+  ret i32 0
+}

@@ -1,0 +1,151 @@
+extern func print_int(int) void;
+extern func print_string(string) void;
+extern func read_int() int;
+
+
+// https://www.geeksforgeeks.org/dsa/radix-sort/
+
+package RadixSort {
+
+    var arr [25]int;
+    var n int = 25;
+    var output [25]int;
+    var count [10]int;
+
+    var expected [25]int;
+
+    func countSort(exp int) void {
+        var i int;
+
+        for (i = 0; i < 10; i = i + 1) {
+            count[i] = 0;
+        }
+
+        for (i = 0; i < n; i = i + 1) {
+            count[(arr[i] / exp) % 10] = count[(arr[i] / exp) % 10] + 1;
+        }
+
+        for (i = 1; i < 10; i = i + 1) {
+            count[i] = count[i] + count[i - 1];
+        }
+
+        for (i = n - 1; i >= 0; i = i - 1) {
+            output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+            count[(arr[i] / exp) % 10] = count[(arr[i] / exp) % 10] - 1;
+        }
+
+        for (i = 0; i < n; i = i + 1) {
+            arr[i] = output[i];
+        }
+    }
+
+    func getMax() int {
+        var mx int;
+        var i int;
+
+        mx = arr[0];
+        for (i = 1; i < n; i = i + 1) {
+            if (arr[i] > mx) {
+                mx = arr[i];
+            }
+        }
+        return (mx);
+    }
+
+    func radixSort() void {
+        var m, exp int;
+        var i int;
+
+        m = getMax();
+
+        for (exp = 1; m / exp > 0; exp = exp * 10) {
+            countSort(exp);
+        }
+    }
+
+    func print() void {
+        var i, j int;
+        for (i = 0; i < n; i = i + 1) {
+            print_int(arr[i]);
+            print_string(" ");
+        }
+
+        print_string("\n");
+    }
+
+    func verify() bool {
+        var i int;
+        for (i = 0; i < n; i = i + 1) {
+            if (arr[i] != expected[i]) {
+                return (false);
+            }
+        }
+        return (true);
+    }
+
+    func main() int {
+        var correct bool;
+
+        arr[0] = 996035010;
+        arr[1] = 1416039869;
+        arr[2] = 1686725777;
+        arr[3] = 1270417511;
+        arr[4] = 1235805284;
+        arr[5] = 477472559;
+        arr[6] = 292826756;
+        arr[7] = 46091218;
+        arr[8] = 673465360;
+        arr[9] = 1434732903;
+        arr[10] = 643217048;
+        arr[11] = 1347305337;
+        arr[12] = 970736756;
+        arr[13] = 834724906;
+        arr[14] = 997543002;
+        arr[15] = 361681817;
+        arr[16] = 933217656;
+        arr[17] = 1110581221;
+        arr[18] = 107834995;
+        arr[19] = 781134791;
+        arr[20] = 1310526727;
+        arr[21] = 968647807;
+        arr[22] = 1591152641;
+        arr[23] = 930557006;
+        arr[24] = 781372098;
+        expected[0] = 46091218;
+        expected[1] = 107834995;
+        expected[2] = 292826756;
+        expected[3] = 361681817;
+        expected[4] = 477472559;
+        expected[5] = 643217048;
+        expected[6] = 673465360;
+        expected[7] = 781134791;
+        expected[8] = 781372098;
+        expected[9] = 834724906;
+        expected[10] = 930557006;
+        expected[11] = 933217656;
+        expected[12] = 968647807;
+        expected[13] = 970736756;
+        expected[14] = 996035010;
+        expected[15] = 997543002;
+        expected[16] = 1110581221;
+        expected[17] = 1235805284;
+        expected[18] = 1270417511;
+        expected[19] = 1310526727;
+        expected[20] = 1347305337;
+        expected[21] = 1416039869;
+        expected[22] = 1434732903;
+        expected[23] = 1591152641;
+        expected[24] = 1686725777;
+
+        print();
+        radixSort();
+        print();
+
+        correct = verify();
+
+        print_string("Matches expected result: ");
+        print_int(correct);
+
+        return (0);
+    }
+}

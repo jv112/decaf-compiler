@@ -1,0 +1,142 @@
+; ModuleID = 'whiles'
+source_filename = "DecafComp"
+
+@globalstring = private unnamed_addr constant [7 x i8] c"hello\0A\00", align 1
+@globalstring.1 = private unnamed_addr constant [2 x i8] c",\00", align 1
+@globalstring.2 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
+
+declare void @print_string(ptr)
+
+declare void @print_int(i32)
+
+define i32 @main() {
+func:
+  %x = alloca i32, align 4
+  store i32 0, ptr %x, align 4
+  %y = alloca i32, align 4
+  store i32 0, ptr %y, align 4
+  call void @print_string(ptr @globalstring)
+  store i32 0, ptr %x, align 4
+  br label %gate
+
+gate:                                             ; preds = %func
+  %x1 = load i32, ptr %x, align 4
+  %lttmp = icmp slt i32 %x1, 10
+  br i1 %lttmp, label %decl, label %end
+
+loop:                                             ; preds = %end16, %true9, %true
+  %x2 = load i32, ptr %x, align 4
+  %lttmp3 = icmp slt i32 %x2, 10
+  br i1 %lttmp3, label %body, label %end
+
+decl:                                             ; preds = %gate
+  br label %body
+
+body:                                             ; preds = %decl, %loop
+  %x4 = load i32, ptr %x, align 4
+  %addtmp = add i32 %x4, 1
+  store i32 %addtmp, ptr %x, align 4
+  br label %if
+
+end:                                              ; preds = %loop, %gate
+  ret i32 0
+
+if:                                               ; preds = %body
+  %x5 = load i32, ptr %x, align 4
+  %eqtmp = icmp eq i32 %x5, 5
+  br i1 %eqtmp, label %true, label %false
+
+true:                                             ; preds = %if
+  br label %loop
+
+false:                                            ; preds = %unreachable, %if
+  br label %if6
+
+unreachable:                                      ; No predecessors!
+  br label %false
+
+if6:                                              ; preds = %false
+  %x7 = load i32, ptr %x, align 4
+  %eqtmp8 = icmp eq i32 %x7, 7
+  br i1 %eqtmp8, label %true9, label %false10
+
+true9:                                            ; preds = %if6
+  store i32 100, ptr %x, align 4
+  br label %loop
+
+false10:                                          ; preds = %unreachable11, %if6
+  store i32 0, ptr %y, align 4
+  br label %gate12
+
+unreachable11:                                    ; No predecessors!
+  br label %false10
+
+gate12:                                           ; preds = %false10
+  %y17 = load i32, ptr %y, align 4
+  %lttmp18 = icmp slt i32 %y17, 10
+  br i1 %lttmp18, label %decl14, label %end16
+
+loop13:                                           ; preds = %false34, %true27
+  %y19 = load i32, ptr %y, align 4
+  %lttmp20 = icmp slt i32 %y19, 10
+  br i1 %lttmp20, label %body15, label %end16
+
+decl14:                                           ; preds = %gate12
+  br label %body15
+
+body15:                                           ; preds = %decl14, %loop13
+  %y21 = load i32, ptr %y, align 4
+  %addtmp22 = add i32 %y21, 1
+  store i32 %addtmp22, ptr %y, align 4
+  br label %if23
+
+end16:                                            ; preds = %true33, %loop13, %gate12
+  br label %loop
+
+if23:                                             ; preds = %body15
+  %y24 = load i32, ptr %y, align 4
+  %gttmp = icmp sgt i32 %y24, 3
+  br i1 %gttmp, label %noskct, label %skctend
+
+noskct:                                           ; preds = %if23
+  %y25 = load i32, ptr %y, align 4
+  %lttmp26 = icmp slt i32 %y25, 5
+  %andtmp = and i1 %gttmp, %lttmp26
+  br label %skctend
+
+skctend:                                          ; preds = %noskct, %if23
+  %phival = phi i1 [ %gttmp, %if23 ], [ %andtmp, %noskct ]
+  br i1 %phival, label %true27, label %false28
+
+true27:                                           ; preds = %skctend
+  br label %loop13
+
+false28:                                          ; preds = %unreachable29, %skctend
+  br label %if30
+
+unreachable29:                                    ; No predecessors!
+  br label %false28
+
+if30:                                             ; preds = %false28
+  %y31 = load i32, ptr %y, align 4
+  %eqtmp32 = icmp eq i32 %y31, 7
+  br i1 %eqtmp32, label %true33, label %false34
+
+true33:                                           ; preds = %if30
+  br label %end16
+
+false34:                                          ; preds = %unreachable35, %if30
+  %x36 = load i32, ptr %x, align 4
+  call void @print_int(i32 %x36)
+  call void @print_string(ptr @globalstring.1)
+  %y37 = load i32, ptr %y, align 4
+  call void @print_int(i32 %y37)
+  call void @print_string(ptr @globalstring.2)
+  br label %loop13
+
+unreachable35:                                    ; No predecessors!
+  br label %false34
+
+unreachable38:                                    ; No predecessors!
+  ret i32 0
+}

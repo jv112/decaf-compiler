@@ -1,0 +1,32 @@
+; ModuleID = 'returncheck'
+source_filename = "DecafComp"
+
+declare void @print_int(i32)
+
+define i32 @main() {
+func:
+  %calltmp = call i32 @foo1()
+  call void @print_int(i32 %calltmp)
+  ret i32 0
+
+unreachable:                                      ; No predecessors!
+  ret i32 0
+}
+
+define i32 @foo1() {
+func:
+  %calltmp = call i32 @foo2()
+  %addtmp = add i32 1, %calltmp
+  ret i32 %addtmp
+
+unreachable:                                      ; No predecessors!
+  ret i32 0
+}
+
+define i32 @foo2() {
+func:
+  ret i32 2
+
+unreachable:                                      ; No predecessors!
+  ret i32 0
+}

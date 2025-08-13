@@ -1,0 +1,13 @@
+; ModuleID = 'Scoping'
+source_filename = "DecafComp"
+
+declare i32 @foo()
+
+define i32 @main() {
+func:
+  %x = alloca i32, align 4
+  store i32 0, ptr %x, align 4
+  %x1 = alloca i32, align 4
+  store i32 0, ptr %x1, align 4
+  ret i32 0
+}

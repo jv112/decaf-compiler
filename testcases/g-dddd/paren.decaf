@@ -1,0 +1,23 @@
+extern func print_int(int) void;
+extern func print_string(string) void;
+
+
+package expr {
+  func main() int {
+    var a, b, c, d int;
+    var ex1, ex2 int;
+
+    a = 2;
+    b = 3;
+    c = 4;
+    d = 5;
+
+    ex1 = (((a + b) * c) / d) + ((a - b) * (c + d)); // 4 + (-9) = -5
+    ex2 = a + b * c / d + a - b * c + d; // 2 + 2 + 2 - 12 + 5 = -1
+
+    print_int(ex1); 
+    print_int(ex2);
+
+    return (0);
+  }
+}

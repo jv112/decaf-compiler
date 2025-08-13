@@ -1,0 +1,51 @@
+extern func print_int(int) void;
+
+
+// https://www.geeksforgeeks.org/dsa/longest-common-subsequence-dp-4/
+
+package LCS {
+  var s1 [15]int;
+  var s2 [15]int;
+
+  func max(a int, b int) int {
+    if (a > b) {
+      return (a);
+    } else {
+      return (b);
+    }
+  }
+
+  func lcsRec(m int, n int) int {
+    if (m == 0 || n == 0) {
+      return (0);
+    }
+
+    if (s1[m-1] == s2[n-1]) {
+      return (1 + lcsRec(m-1, n-1));
+    }
+    else {
+      return (max(lcsRec(m, n-1), lcsRec(m-1, n)));
+    }
+  }
+
+  func main() int {
+    s1[0] = 65;
+    s1[1] = 71;
+    s1[2] = 71;
+    s1[3] = 84;
+    s1[4] = 65;
+    s1[5] = 66;
+
+    s2[0] = 71;
+    s2[1] = 88;
+    s2[2] = 84;
+    s2[3] = 88;
+    s2[4] = 65;
+    s2[5] = 89;
+    s2[6] = 66;
+
+    print_int(lcsRec(6, 7));
+
+    return (0);
+  }
+}

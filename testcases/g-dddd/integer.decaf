@@ -1,0 +1,22 @@
+extern func print_int(int) void;
+extern func print_string(string) void;
+
+package integertest {
+	func main() int {
+		var i int;
+		i = -2147483648;
+    print_int(i);
+    print_string("\n");
+    i = 2147483647;
+    print_int(i);
+    print_string("\n");
+    i = 0x7FFFFFFF;
+    print_int(i);
+    print_string("\n");
+    i = 0x80000000;
+    print_int(i);
+    print_string("\n");
+
+    return (0);
+	}
+}

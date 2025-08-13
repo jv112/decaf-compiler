@@ -1,0 +1,56 @@
+extern func print_int(int) void;
+extern func print_string(string) void;
+extern func read_int() int;
+
+
+// https://www.geeksforgeeks.org/dsa/modular-division/
+
+package ModularDivison {
+
+    func power(base int, exp int, mod int) int {
+      var result int;
+
+      result = 1;
+      base = base % mod;
+      while (exp > 0) {
+        if (exp % 2 == 1) {
+          result = (result * base ) % mod;
+        }
+        base = (base * base) % mod;
+        exp = exp / 2;
+      }
+
+      return (result);
+    }
+
+    func gcd(a int, b int) int {
+      if (b == 0) {
+        return (a);
+      }
+      return (gcd(b, a % b));
+    }
+
+    func modInverse(b int, m int) int {
+      return (power(b, m - 2, m));
+    }
+
+    func modDivide(a int, b int, m int) int {
+      var inv int;
+
+      if (b == 0 || gcd(b, m) != 1) {
+        return (-1);
+      } 
+
+      inv = modInverse(b, m);
+      return ((a * inv) % m);
+    }
+ 
+    func main() int {
+        var a, b, m int;
+        a = 10;
+        b = 2;
+        m = 13;
+        print_int(modDivide(a, b, m));
+        return (0);
+    }
+}

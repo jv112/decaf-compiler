@@ -1,0 +1,12 @@
+; ModuleID = 'Print'
+source_filename = "DecafComp"
+
+@globalstring = private unnamed_addr constant [9 x i8] c"\09\0B\0D\0A\07\0C\08\\\00", align 1
+
+declare void @print_string(ptr)
+
+define void @main() {
+func:
+  call void @print_string(ptr @globalstring)
+  ret void
+}

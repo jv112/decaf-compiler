@@ -1,0 +1,140 @@
+extern func print_int(int) void;
+extern func print_string(string) void;
+extern func read_int() int;
+
+
+// https://www.geeksforgeeks.org/dsa/heap-sort/
+
+package Heapsort {
+
+    var arr [25]int;
+    var n int = 25;
+
+    var expected [25]int;
+
+    func heapify(n int, i int) void {
+        var l, r, largest, temp int;
+
+        largest = i;
+        l = 2 * i + 1;
+        r = 2 * i + 2;
+
+        if (l < n && arr[l] > arr[largest]) {
+            largest = l;
+        }
+
+        if (r < n && arr[r] > arr[largest]) {
+            largest = r;
+        }
+
+        if (largest != i) {
+            temp = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = temp;
+
+            heapify(n, largest);
+        }
+    }
+
+    func heapsort() void {
+        var i, temp int;
+        
+        for (i = n/2-1; i >= 0; i = i - 1) {
+            heapify(n, i);
+        }
+
+        for (i = n-1; i > 0; i = i - 1) {
+            temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+
+            heapify(i, 0);
+        }
+    }
+
+    func print() void {
+        var i, j int;
+        for (i = 0; i < n; i = i + 1) {
+            print_int(arr[i]);
+            print_string(" ");
+        }
+
+        print_string("\n");
+    }
+
+    func verify() bool {
+        var i int;
+        for (i = 0; i < n; i = i + 1) {
+            if (arr[i] != expected[i]) {
+                return (false);
+            }
+        }
+        return (true);
+    }
+
+    func main() int {
+        var correct bool;
+        
+        arr[0] = 657769624;
+        arr[1] = 113450112;
+        arr[2] = -1282692181;
+        arr[3] = -558880188;
+        arr[4] = -2127606630;
+        arr[5] = 1339899527;
+        arr[6] = -842308564;
+        arr[7] = -1656039878;
+        arr[8] = -343057077;
+        arr[9] = -941903993;
+        arr[10] = 726278499;
+        arr[11] = 392091053;
+        arr[12] = 1180245437;
+        arr[13] = 1281003125;
+        arr[14] = -1545892245;
+        arr[15] = 919048722;
+        arr[16] = 1944644572;
+        arr[17] = -1731124625;
+        arr[18] = -1386238340;
+        arr[19] = -1616618718;
+        arr[20] = 1953200515;
+        arr[21] = 284460835;
+        arr[22] = -1437109171;
+        arr[23] = 1726086919;
+        arr[24] = -1067495697;
+        expected[0] = -2127606630;
+        expected[1] = -1731124625;
+        expected[2] = -1656039878;
+        expected[3] = -1616618718;
+        expected[4] = -1545892245;
+        expected[5] = -1437109171;
+        expected[6] = -1386238340;
+        expected[7] = -1282692181;
+        expected[8] = -1067495697;
+        expected[9] = -941903993;
+        expected[10] = -842308564;
+        expected[11] = -558880188;
+        expected[12] = -343057077;
+        expected[13] = 113450112;
+        expected[14] = 284460835;
+        expected[15] = 392091053;
+        expected[16] = 657769624;
+        expected[17] = 726278499;
+        expected[18] = 919048722;
+        expected[19] = 1180245437;
+        expected[20] = 1281003125;
+        expected[21] = 1339899527;
+        expected[22] = 1726086919;
+        expected[23] = 1944644572;
+        expected[24] = 1953200515;
+
+        print();
+        heapsort();
+        print();
+
+        correct = verify();
+
+        print_string("Matches expected result: ");
+        print_int(correct);
+
+        return (0);
+    }
+}

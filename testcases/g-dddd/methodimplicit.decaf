@@ -1,0 +1,22 @@
+extern func print_int(int) void;
+extern func print_string(string) void;
+
+package methodtest {
+  
+  func a() void {
+  }
+
+  func b() int {
+  }
+
+  func c() bool {
+  }
+
+	func main() int {
+		print_int(b());
+    print_int(c());
+    a();
+
+    return (0);
+	}
+}

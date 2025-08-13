@@ -1,0 +1,41 @@
+extern func print_int(int) void;
+extern func print_string(string) void;
+extern func read_int() int;
+
+
+// https://www.geeksforgeeks.org/dsa/coin-change-dp-7/
+
+package CoinChange {
+
+    var coins [3]int;
+    var n int = 3;
+
+    func countRecur(n int, sum int) int {
+      if (sum == 0) {
+        return (1);
+      }
+
+      if (sum < 0 || n == 0) {
+        return (0);
+      }
+
+      return (countRecur(n, sum - coins[n - 1]) + countRecur(n - 1, sum));
+    }
+
+    func count(sum int) int {
+      return (countRecur(n, sum));
+    }
+
+    func main() int {
+        var sum int;
+
+        coins[0] = 1;
+        coins[1] = 2;
+        coins[2] = 3;
+        sum = 5;
+
+        print_int(count(sum));
+
+        return (0);
+    }
+}

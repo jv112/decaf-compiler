@@ -1,0 +1,116 @@
+extern func print_int(int) void;
+extern func print_string(string) void;
+extern func read_int() int;
+
+
+// https://www.geeksforgeeks.org/dsa/insertion-sort-algorithm/
+
+package InsertionSort {
+
+    var arr [25]int;
+    var n int = 25;
+
+    var expected [25]int;
+
+    func insertionSort() void {
+        var i, j, key int;
+
+        for (i = 1; i < n; i = i + 1) {
+          key = arr[i];
+          j = i - 1;
+
+          while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+          }
+          arr[j + 1] = key;
+        }
+        
+    }
+
+    func print() void {
+        var i, j int;
+        for (i = 0; i < n; i = i + 1) {
+            print_int(arr[i]);
+            print_string(" ");
+        }
+
+        print_string("\n");
+    }
+
+    func verify() bool {
+        var i int;
+        for (i = 0; i < n; i = i + 1) {
+            if (arr[i] != expected[i]) {
+                return (false);
+            }
+        }
+        return (true);
+    }
+
+    func main() int {
+        var correct bool;
+        
+        arr[0] = 1867098796;
+        arr[1] = -1433697673;
+        arr[2] = 618746263;
+        arr[3] = 1425956643;
+        arr[4] = 1681841164;
+        arr[5] = -1583020209;
+        arr[6] = 975335409;
+        arr[7] = 2112876605;
+        arr[8] = -299668513;
+        arr[9] = 1748763059;
+        arr[10] = 1346252713;
+        arr[11] = -41728182;
+        arr[12] = -1623158911;
+        arr[13] = -902460064;
+        arr[14] = 1617050088;
+        arr[15] = 381984789;
+        arr[16] = 291025663;
+        arr[17] = 946808831;
+        arr[18] = 272375242;
+        arr[19] = 492397371;
+        arr[20] = 74031300;
+        arr[21] = -608554227;
+        arr[22] = 1419438699;
+        arr[23] = -978565377;
+        arr[24] = 1803211465;
+        expected[0] = -1623158911;
+        expected[1] = -1583020209;
+        expected[2] = -1433697673;
+        expected[3] = -978565377;
+        expected[4] = -902460064;
+        expected[5] = -608554227;
+        expected[6] = -299668513;
+        expected[7] = -41728182;
+        expected[8] = 74031300;
+        expected[9] = 272375242;
+        expected[10] = 291025663;
+        expected[11] = 381984789;
+        expected[12] = 492397371;
+        expected[13] = 618746263;
+        expected[14] = 946808831;
+        expected[15] = 975335409;
+        expected[16] = 1346252713;
+        expected[17] = 1419438699;
+        expected[18] = 1425956643;
+        expected[19] = 1617050088;
+        expected[20] = 1681841164;
+        expected[21] = 1748763059;
+        expected[22] = 1803211465;
+        expected[23] = 1867098796;
+        expected[24] = 2112876605;
+
+        print();
+        insertionSort();
+        print();
+
+        correct = verify();
+
+        print_string("Matches expected result: ");
+        print_int(correct);
+
+        return (0);
+    }
+}

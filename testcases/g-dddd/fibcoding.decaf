@@ -1,0 +1,68 @@
+extern func print_int(int) void;
+extern func print_string(string) void;
+extern func read_int() int;
+
+
+// https://www.geeksforgeeks.org/dsa/fibonacci-coding/
+
+package FibonacciCoding {
+
+    var N int = 30;
+    var fib [30]int;
+    var codeword [255]int;
+
+    func largestFiboLessOrEqual(n int) int {
+      var i int;
+
+      fib[0] = 1;
+      fib[1] = 2;
+
+      for (i = 2; fib[i-1] <= n; i = i + 1) {
+        fib[i] = fib[i - 1] + fib[i - 2];
+      }
+
+      return (i - 2);
+    }
+
+    func fibonacciEncoding(n int) void {
+      var i, index int;
+
+      index = largestFiboLessOrEqual(n);
+      i = index;
+
+      while (n != 0) {
+        codeword[i] = 1;
+        n = n - fib[i];
+        i = i - 1;
+        while (i >= 0 && fib[i] > n) {
+          codeword[i] = 0;
+          i = i - 1;
+        }
+      }
+
+      codeword[index + 1] = 1;
+      codeword[index + 2] = 3;
+    }
+
+    func print(n int) void {
+      var i int;
+
+      for (i = 0; i < n; i = i + 1) {
+        if (codeword[i] == 3) {
+          break;
+        }
+        
+        print_int(codeword[i]);
+      }
+    }
+
+    func main() int {
+        var n int;
+
+        n = 143;
+        fibonacciEncoding(n);
+        print(n);
+
+        return (0);
+    }
+}

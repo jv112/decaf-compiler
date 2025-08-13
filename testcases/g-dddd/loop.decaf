@@ -1,0 +1,14 @@
+extern func print_int(int) void;
+extern func print_string(string) void;
+
+package loop {
+  func main() int {
+    var loopstart int;
+
+    for (loopstart = 0; loopstart < 10; loopstart = loopstart + 1) {
+      print_int(loopstart);
+    }
+
+    return (0);
+  }
+}

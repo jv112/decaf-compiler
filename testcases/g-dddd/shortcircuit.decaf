@@ -1,0 +1,49 @@
+extern func print_int(int) void;
+extern func print_string(string) void;
+extern func read_int() int;
+
+package ShortCircuit {
+
+    var arr [5]int;
+    var calls int;
+
+    func foo(i int) bool {
+        print_string("foo ");
+        print_int(i);
+        print_string("\n");
+
+        calls = calls + 1;
+        return (arr[i] % 2 == 0);
+    }
+
+    func initArray() void {
+        var i int;
+        for (i = 0; i < 5; i = i + 1) {
+            arr[i] = i + 1;
+        }
+    }
+
+    func main() int {
+        var i int;
+        var result bool;
+
+        initArray();
+        calls = 0;
+
+        for (i = 0; i < 5; i = i + 1) {
+            result = (i <= 2) && foo(i);
+
+            print_string("i = ");
+            print_int(i);
+            print_string(", result = ");
+            print_int(result);
+            print_string("\n");
+        }
+
+        print_int(calls);
+        print_string(" calls to foo");
+        print_string("\n");
+
+        return (0);
+    }
+}
